@@ -1,9 +1,13 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,6 +73,19 @@ public class RequestParamController {
     public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
         log.info("username = {}, age = {}", paramMap.get("username"), paramMap.get("age"));
         return"ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute @Valid HelloData helloData) {
+        log.info("username = {}, age = {}", helloData.getUsername(),helloData.getAge());
+//        if (helloData.getAge() == null) {
+//            throw new IllegalArgumentException("age is null");
+//        }
+//        if (helloData.getUsername() == null) {
+//            throw new IllegalArgumentException("username is null");
+//        }
+        return "modelAttributeV1 ok";
     }
 
 
